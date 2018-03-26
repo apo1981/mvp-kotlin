@@ -1,23 +1,33 @@
 package com.kotlin.aplaza.mvpkotlin
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainView {
 
-    private val items = listOf(
-            "Mon 6/23 - Sunny - 31/17",
-            "Tue 6/24 - Foggy - 21/8"
-    )
+    private val presenter = MainPresenter(this)
+    private lateinit var forecastList : RecyclerView
+    private var forecastAdapter = ForecastListAdapter(listOf())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val forecastList = findViewById<RecyclerView>(R.id.forecast_list)
+        forecastList = findViewById(R.id.forecast_list)
+        initRecyclerView()
+
+        presenter.requestForecast()
+    }
+
+    private fun initRecyclerView() {
         forecastList.layoutManager = LinearLayoutManager(this)
-        forecastList.adapter = ForecastListAdapter(items)
+        forecastList.adapter = forecastAdapter
+    }
+
+    override fun showForecast(forecasts: List<String>) {
+        forecastAdapter.setData(forecasts)
+        forecastAdapter.notifyDataSetChanged()
     }
 }
