@@ -1,5 +1,8 @@
 package com.kotlin.aplaza.mvpkotlin
 
+import com.kotlin.aplaza.mvpkotlin.domain.Forecast
+import com.kotlin.aplaza.mvpkotlin.domain.ForecastList
+import com.kotlin.aplaza.mvpkotlin.ui.adapter.ForecastListAdapter
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -15,7 +18,7 @@ class ForecastListAdapterTest {
 
     @Before
     fun setUp() {
-        sut = ForecastListAdapter(listOf())
+        sut = ForecastListAdapter()
     }
 
     @Test
@@ -26,7 +29,9 @@ class ForecastListAdapterTest {
 
     @Test
     fun checkThatForecastItemsIsEqualToDataSourceWhenIsNotEmpty() {
-        val list = listOf("hola", "Adios")
+        val forecast1 = Forecast("20180319", "forecast1", 3,1)
+        val forecast2 = Forecast("20180320", "forescast2", 5, 3)
+        val list = ForecastList("Malaga","Spain", listOf(forecast1, forecast2))
         sut.setData(list)
         val size = sut.itemCount
         assertEquals(list.size, size)

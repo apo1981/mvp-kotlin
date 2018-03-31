@@ -1,15 +1,19 @@
-package com.kotlin.aplaza.mvpkotlin
+package com.kotlin.aplaza.mvpkotlin.ui
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import com.kotlin.aplaza.mvpkotlin.R
+import com.kotlin.aplaza.mvpkotlin.domain.ForecastList
+import com.kotlin.aplaza.mvpkotlin.domain.RequestForecastCommand
+import com.kotlin.aplaza.mvpkotlin.ui.adapter.ForecastListAdapter
 
 class MainActivity : AppCompatActivity(), MainView {
 
     private val presenter = MainPresenter(this)
     private lateinit var forecastList : RecyclerView
-    private var forecastAdapter = ForecastListAdapter(listOf())
+    private var forecastAdapter = ForecastListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,7 +22,8 @@ class MainActivity : AppCompatActivity(), MainView {
         forecastList = findViewById(R.id.forecast_list)
         initRecyclerView()
 
-        presenter.requestForecast()
+        val request = RequestForecastCommand("29018")
+        presenter.requestForecast(request)
     }
 
     private fun initRecyclerView() {
@@ -26,7 +31,7 @@ class MainActivity : AppCompatActivity(), MainView {
         forecastList.adapter = forecastAdapter
     }
 
-    override fun showForecast(forecasts: List<String>) {
+    override fun showForecast(forecasts: ForecastList) {
         forecastAdapter.setData(forecasts)
         forecastAdapter.notifyDataSetChanged()
     }
