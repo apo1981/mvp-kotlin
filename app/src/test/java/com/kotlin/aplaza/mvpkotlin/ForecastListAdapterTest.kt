@@ -18,7 +18,7 @@ class ForecastListAdapterTest {
 
     @Before
     fun setUp() {
-        sut = ForecastListAdapter()
+        sut = ForecastListAdapter(ForecastItemClickListener())
     }
 
     @Test
@@ -29,11 +29,17 @@ class ForecastListAdapterTest {
 
     @Test
     fun checkThatForecastItemsIsEqualToDataSourceWhenIsNotEmpty() {
-        val forecast1 = Forecast("20180319", "forecast1", 3,1)
-        val forecast2 = Forecast("20180320", "forescast2", 5, 3)
+        val forecast1 = Forecast("20180319", "forecast1", 3,1,
+                "https://url.com")
+        val forecast2 = forecast1
         val list = ForecastList("Malaga","Spain", listOf(forecast1, forecast2))
         sut.setData(list)
         val size = sut.itemCount
         assertEquals(list.size, size)
+    }
+
+    class ForecastItemClickListener: ForecastListAdapter.OnItemClickListener {
+        override fun invoke(forecast: Forecast) {
+        }
     }
 }

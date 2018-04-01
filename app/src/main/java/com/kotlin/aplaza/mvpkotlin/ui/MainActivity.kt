@@ -5,15 +5,23 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.kotlin.aplaza.mvpkotlin.R
+import com.kotlin.aplaza.mvpkotlin.domain.Forecast
 import com.kotlin.aplaza.mvpkotlin.domain.ForecastList
 import com.kotlin.aplaza.mvpkotlin.domain.RequestForecastCommand
 import com.kotlin.aplaza.mvpkotlin.ui.adapter.ForecastListAdapter
+import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity(), MainView {
 
     private val presenter = MainPresenter(this)
     private lateinit var forecastList : RecyclerView
-    private var forecastAdapter = ForecastListAdapter()
+    private var forecastAdapter = ForecastListAdapter(
+            object: ForecastListAdapter.OnItemClickListener {
+                override fun invoke(forecast: Forecast) {
+                    toast(forecast.date)
+                }
+            }
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
