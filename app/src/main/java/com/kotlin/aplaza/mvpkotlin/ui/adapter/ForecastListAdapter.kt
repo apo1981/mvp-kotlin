@@ -10,6 +10,8 @@ import com.kotlin.aplaza.mvpkotlin.domain.ForecastList
 import com.kotlin.aplaza.mvpkotlin.ui.utils.ctx
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_forecast.view.*
+import java.text.DateFormat
+import java.util.*
 
 /**
  * Created by home on 11/02/18.
@@ -20,7 +22,7 @@ class ForecastListAdapter(private val itemClick: (Forecast) -> Unit) :
     private var weekForecast: ForecastList
 
     init {
-        weekForecast = ForecastList("", "", listOf())
+        weekForecast = ForecastList(0, "", "", listOf())
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
@@ -42,12 +44,17 @@ class ForecastListAdapter(private val itemClick: (Forecast) -> Unit) :
         fun bindForecast(forecast: Forecast) {
             with(forecast) {
                 Picasso.with(itemView.ctx).load(iconUrl).into(itemView.icon)
-                itemView.date.text = date
+                itemView.date.text = convertDate(date)
                 itemView.description.text = description
                 itemView.maxTemperature.text = "$high"
                 itemView.minTemperature.text = "$low"
                 itemView.setOnClickListener { itemClick(this) }
             }
+        }
+
+        private fun convertDate(date: Long): String {
+            val df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault())
+            return df.format(date)
         }
     }
 }

@@ -13,7 +13,7 @@ import org.jetbrains.anko.toast
 class MainActivity : AppCompatActivity(), MainView {
 
     private val presenter = MainPresenter(this)
-    private var forecastAdapter = ForecastListAdapter { toast(it.date) }
+    private var forecastAdapter = ForecastListAdapter { toast(it.description) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity(), MainView {
 
         initRecyclerView()
 
-        val request = RequestForecastCommand("29018")
+        val request = RequestForecastCommand(29018)
         presenter.requestForecast(request)
     }
 

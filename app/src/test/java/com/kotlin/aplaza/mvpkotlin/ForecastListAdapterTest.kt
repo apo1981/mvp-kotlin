@@ -29,9 +29,9 @@ class ForecastListAdapterTest {
 
     @Test
     fun checkThatForecastItemsIsEqualToDataSourceWhenIsNotEmpty() {
-        val forecast1 = Forecast("20180319", "forecast1", 3,1,
+        val forecast1 = Forecast(20180319, "forecast1", 3,1,
                 "https://url.com")
-        val list = ForecastList("Malaga","Spain", listOf(forecast1, forecast1))
+        val list = ForecastList(29018, "Malaga","Spain", listOf(forecast1, forecast1))
         sut.setData(list)
         val size = sut.itemCount
         assertEquals(list.size, size)

@@ -3,7 +3,7 @@ package com.kotlin.aplaza.mvpkotlin.domain
 /**
  * Created by pla on 30/03/2018.
  */
-data class ForecastList(val city: String, val country: String, val dailyForecast: List<Forecast>) {
+data class ForecastList(val id: Long, val city: String, val country: String, val dailyForecast: List<Forecast>) {
 
     val size: Int
         get() = dailyForecast.size
@@ -11,5 +11,5 @@ data class ForecastList(val city: String, val country: String, val dailyForecast
     operator fun get(position: Int): Forecast = dailyForecast[position]
 }
 
-data class Forecast(val date: String, val description: String, val high: Int, val low: Int,
+data class Forecast(val date: Long, val description: String, val high: Int, val low: Int,
                     val iconUrl: String)
